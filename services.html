@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Michelle Wanjiru Maina</title>
+    <meta name="description" content="Custom beadwork services, business consulting, and cultural workshops by Michelle Wanjiru Maina in Nanyuki, Kenya.">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://unpkg.com/splitting@1.0.6/dist/splitting.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-dark: #2C2C2C;
+            --primary-accent: #D2691E;
+            --primary-cream: #F5F5DC;
+            --accent-gold: #DAA520;
+            --accent-sage: #9CAF88;
+            --accent-coral: #F08080;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary-dark);
+            background: var(--primary-cream);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(245, 245, 220, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-accent);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-accent);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Page Header */
+        .page-header {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, var(--primary-dark), #3a3a3a);
+            color: white;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-accent), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Services Section */
+        .services-section {
+            padding: 6rem 0;
+            background: white;
+        }
+        
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-dark);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .service-card {
+            background: var(--primary-cream);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary-accent), var(--accent-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .service-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-features {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .service-features li {
+            padding: 0.5rem 0;
+            color: #666;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-accent);
+            font-weight: bold;
+        }
+        
+        /* Configurator Section */
+        .configurator-section {
+            padding: 6rem 0;
+            background: var(--primary-cream);
+        }
+        
+        .configurator-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .configurator {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .configurator-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-dark);
+        }
+        
+        .configurator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        
+        .configurator-options {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .option-group {
+            background: var(--primary-cream);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .option-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .option-items {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .option-item {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--primary-accent);
+            background: transparent;
+            color: var(--primary-accent);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .option-item:hover,
+        .option-item.active {
+            background: var(--primary-accent);
+            color: white;
+        }
+        
+        .configurator-preview {
+            background: var(--primary-cream);
+            border-radius: 15px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+        
+        .preview-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .preview-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .preview-description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .configurator-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-accent);
+            margin-bottom: 1rem;
+        }
+        
+        .configurator-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-accent), var(--accent-gold));
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(210, 105, 30, 0.3);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 6rem 0;
+            background: white;
+        }
+        
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-accent), var(--accent-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        .contact-details h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--primary-dark);
+        }
+        
+        .contact-details p {
+            color: #666;
+        }
+        
+        .contact-form {
+            background: var(--primary-cream);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e5e5e5;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary-accent);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .error-message {
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .form-input.error {
+            border-color: #dc2626;
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            padding: 6rem 0;
+            background: var(--primary-cream);
+        }
+        
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--primary-accent);
+            transform: scale(1.05);
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-period {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: #666;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-accent);
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: var(--primary-cream);
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .footer p {
+            opacity: 0.8;
+        }
+        
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .configurator-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="font-display text-xl font-bold text-gray-800">
+                    <a href="index.html">Michelle Wanjiru Maina</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="portfolio.html" class="nav-link">Portfolio</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="services.html" class="nav-link active">Services</a>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-menu md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-800 hover:text-orange-600">Home</a>
+                <a href="portfolio.html" class="block px-3 py-2 text-gray-800 hover:text-orange-600">Portfolio</a>
+                <a href="about.html" class="block px-3 py-2 text-gray-800 hover:text-orange-600">About</a>
+                <a href="services.html" class="block px-3 py-2 text-orange-600 font-semibold">Services</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container mx-auto px-4">
+            <h1 class="page-title font-display">Services & Custom Orders</h1>
+            <p class="page-subtitle">
+                From custom beadwork designs to business consulting and cultural workshops, 
+                discover how we can collaborate to create something beautiful and meaningful.
+            </p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="services-container">
+            <h2 class="section-title font-display animate-on-scroll">What I Offer</h2>
+            
+            <div class="services-grid">
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">📿</div>
+                    <h3 class="service-title">Custom Beadwork</h3>
+                    <p class="service-description">
+                        Bespoke jewelry pieces designed to your specifications, incorporating traditional 
+                        Maasai techniques with your personal style and meaningful symbols.
+                    </p>
+                    <ul class="service-features">
+                        <li>Personalized design consultation</li>
+                        <li>Traditional & contemporary styles</li>
+                        <li>Cultural significance guidance</li>
+                        <li>High-quality materials</li>
+                        <li>Worldwide shipping</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">💼</div>
+                    <h3 class="service-title">Business Consulting</h3>
+                    <p class="service-description">
+                        Strategic guidance for creative entrepreneurs and cultural businesses, leveraging 
+                        my BBM education and hands-on experience in the craft industry.
+                    </p>
+                    <ul class="service-features">
+                        <li>Business plan development</li>
+                        <li>Market analysis & strategy</li>
+                        <li>Brand development</li>
+                        <li>Digital marketing guidance</li>
+                        <li>Sustainability planning</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🎓</div>
+                    <h3 class="service-title">Cultural Workshops</h3>
+                    <p class="service-description">
+                        Educational experiences that teach the history, significance, and techniques 
+                        of traditional Kenyan beadwork in an interactive, hands-on environment.
+                    </p>
+                    <ul class="service-features">
+                        <li>History & cultural significance</li>
+                        <li>Hands-on beadwork techniques</li>
+                        <li>Color symbolism education</li>
+                        <li>Pattern creation guidance</li>
+                        <li>Take-home creations</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🛍️</div>
+                    <h3 class="service-title">Wholesale & Retail</h3>
+                    <p class="service-description">
+                        Bulk orders for boutiques, cultural centers, and events. Custom collections 
+                        designed specifically for your brand and target audience.
+                    </p>
+                    <ul class="service-features">
+                        <li>Custom collection design</li>
+                        <li>Competitive wholesale pricing</li>
+                        <li>Quality guarantee</li>
+                        <li>Flexible order quantities</li>
+                        <li>Marketing support materials</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">📸</div>
+                    <h3 class="service-title">Content Creation</h3>
+                    <p class="service-description">
+                        Authentic cultural content for brands, tourism boards, and educational platforms 
+                        showcasing Kenyan heritage and contemporary African design.
+                    </p>
+                    <ul class="service-features">
+                        <li>Cultural storytelling</li>
+                        <li>Photography & videography</li>
+                        <li>Social media content</li>
+                        <li>Educational materials</li>
+                        <li>Brand collaboration</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card animate-on-scroll">
+                    <div class="service-icon">🌟</div>
+                    <h3 class="service-title">Special Events</h3>
+                    <p class="service-description">
+                        Custom beadwork for weddings, cultural celebrations, corporate events, and 
+                        special occasions with meaningful cultural elements.
+                    </p>
+                    <ul class="service-features">
+                        <li>Wedding jewelry sets</li>
+                        <li>Corporate gift collections</li>
+                        <li>Cultural ceremony pieces</li>
+                        <li>Event-specific designs</li>
+                        <li>Group orders available</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Configurator Section -->
+    <section class="configurator-section">
+        <div class="configurator-container">
+            <h2 class="section-title font-display animate-on-scroll">Custom Order Configurator</h2>
+            
+            <div class="configurator animate-on-scroll">
+                <h3 class="configurator-title">Design Your Perfect Piece</h3>
+                
+                <div class="configurator-grid">
+                    <div class="configurator-options">
+                        <div class="option-group">
+                            <h4 class="option-title">Jewelry Type</h4>
+                            <div class="option-items">
+                                <button class="option-item type-option active" data-type="bracelet">Bracelet</button>
+                                <button class="option-item type-option" data-type="necklace">Necklace</button>
+                                <button class="option-item type-option" data-type="earrings">Earrings</button>
+                                <button class="option-item type-option" data-type="set">Complete Set</button>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <h4 class="option-title">Color Style</h4>
+                            <div class="option-items">
+                                <button class="option-item color-option active" data-colors="traditional">Traditional</button>
+                                <button class="option-item color-option" data-colors="modern">Modern</button>
+                                <button class="option-item color-option" data-colors="luxury">Luxury</button>
+                                <button class="option-item color-option" data-colors="custom">Custom</button>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <h4 class="option-title">Pattern Style</h4>
+                            <div class="option-items">
+                                <button class="option-item pattern-option active" data-pattern="simple">Simple</button>
+                                <button class="option-item pattern-option" data-pattern="geometric">Geometric</button>
+                                <button class="option-item pattern-option" data-pattern="ceremonial">Ceremonial</button>
+                                <button class="option-item pattern-option" data-pattern="custom">Custom</button>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <h4 class="option-title">Size</h4>
+                            <div class="option-items">
+                                <button class="option-item size-option active" data-size="small">Small</button>
+                                <button class="option-item size-option" data-size="medium">Medium</button>
+                                <button class="option-item size-option" data-size="large">Large</button>
+                                <button class="option-item size-option" data-size="extraLarge">Extra Large</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="configurator-preview">
+                        <div class="preview-image">📿</div>
+                        <h4 class="preview-title">Custom Bracelet</h4>
+                        <p class="preview-description">
+                            Traditional style bracelet with simple patterns, perfect for everyday wear 
+                            and cultural celebration.
+                        </p>
+                        <div class="configurator-price">KES 2,500</div>
+                        <div class="configurator-actions">
+                            <button class="btn btn-primary" onclick="showComingSoon()">Order Now</button>
+                            <button class="btn btn-secondary" onclick="showComingSoon()">Save Design</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <div class="pricing-container">
+            <h2 class="section-title font-display animate-on-scroll">Pricing Guide</h2>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card animate-on-scroll">
+                    <h3 class="pricing-title">Basic Collection</h3>
+                    <div class="pricing-price">KES 1,500</div>
+                    <div class="pricing-period">Starting price</div>
+                    <ul class="pricing-features">
+                        <li>Simple beadwork designs</li>
+                        <li>Traditional patterns</li>
+                        <li>Standard materials</li>
+                        <li>3-5 day delivery</li>
+                        <li>Basic packaging</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="showComingSoon()">Get Started</button>
+                </div>
+                
+                <div class="pricing-card featured animate-on-scroll">
+                    <div class="pricing-badge">Most Popular</div>
+                    <h3 class="pricing-title">Premium Collection</h3>
+                    <div class="pricing-price">KES 3,500</div>
+                    <div class="pricing-period">Starting price</div>
+                    <ul class="pricing-features">
+                        <li>Complex designs</li>
+                        <li>Premium materials</li>
+                        <li>Custom patterns</li>
+                        <li>Priority delivery</li>
+                        <li>Gift packaging</li>
+                        <li>Certificate of authenticity</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="showComingSoon()">Get Started</button>
+                </div>
+                
+                <div class="pricing-card animate-on-scroll">
+                    <h3 class="pricing-title">Luxury Collection</h3>
+                    <div class="pricing-price">KES 7,500</div>
+                    <div class="pricing-period">Starting price</div>
+                    <ul class="pricing-features">
+                        <li>Exclusive designs</li>
+                        <li>Luxury materials</li>
+                        <li>Personal consultation</li>
+                        <li>Express delivery</li>
+                        <li>Premium packaging</li>
+                        <li>Lifetime warranty</li>
+                        <li>Cultural significance guide</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="showComingSoon()">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <h2 class="section-title font-display animate-on-scroll">Get In Touch</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-info animate-on-scroll">
+                    <h3>Contact Information</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Location</h4>
+                            <p>Nanyuki, Kenya</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>+254 7XX XXX XXX</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>michelle@beadwork.co.ke</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-details">
+                            <h4>Social Media</h4>
+                            <p>@michellebeadwork</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">🕒</div>
+                        <div class="contact-details">
+                            <h4>Working Hours</h4>
+                            <p>Monday - Saturday: 9AM - 6PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form animate-on-scroll">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="service">Service Interest</label>
+                            <select id="service" name="service" class="form-select">
+                                <option value="">Select a service</option>
+                                <option value="custom-beadwork">Custom Beadwork</option>
+                                <option value="business-consulting">Business Consulting</option>
+                                <option value="cultural-workshops">Cultural Workshops</option>
+                                <option value="wholesale">Wholesale & Retail</option>
+                                <option value="content-creation">Content Creation</option>
+                                <option value="special-events">Special Events</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="message">Message *</label>
+                            <textarea id="message" name="message" class="form-textarea" placeholder="Tell me about your project or inquiry..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 Michelle Wanjiru Maina. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    
+    <script>
+        // Initialize services page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate elements on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        });
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+        
+        // Coming soon function
+        function showComingSoon() {
+            alert('Coming soon! This feature is currently in development. Please use the contact form below to place your order.');
+        }
+    </script>
+</body>
+</html>

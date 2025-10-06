@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Michelle Wanjiru Maina</title>
+    <meta name="description" content="Explore Michelle Wanjiru Maina's beadwork portfolio featuring traditional and contemporary African jewelry designs.">
+    
+    
+
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://unpkg.com/splitting@1.0.6/dist/splitting.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-dark: #2C2C2C;
+            --primary-accent: #D2691E;
+            --primary-cream: #F5F5DC;
+            --accent-gold: #DAA520;
+            --accent-sage: #9CAF88;
+            --accent-coral: #F08080;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary-dark);
+            background: var(--primary-cream);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(245, 245, 220, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-accent);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-accent);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Page Header */
+        .page-header {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, var(--primary-dark), #3a3a3a);
+            color: white;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-accent), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            padding: 3rem 0;
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary-accent);
+            background: transparent;
+            color: var(--primary-accent);
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-accent);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(210, 105, 30, 0.3);
+        }
+        
+        /* Portfolio Grid */
+        .portfolio-section {
+            padding: 4rem 0;
+            background: var(--primary-cream);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .portfolio-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .portfolio-item.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-image {
+            transform: scale(1.05);
+        }
+        
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+        
+        .portfolio-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .portfolio-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .portfolio-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            background: var(--primary-accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* Cultural Context Section */
+        .cultural-context {
+            padding: 4rem 0;
+            background: white;
+        }
+        
+        .cultural-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .cultural-card {
+            background: var(--primary-cream);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+        
+        .cultural-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--primary-accent), var(--accent-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .cultural-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .cultural-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Lightbox Styles */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lightbox-overlay.active {
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .lightbox-image {
+            width: 100%;
+            height: 70vh;
+            object-fit: contain;
+            background: #f5f5f5;
+        }
+        
+        .lightbox-info {
+            padding: 2rem;
+        }
+        
+        .lightbox-info h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .lightbox-info p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10001;
+        }
+        
+        .lightbox-prev {
+            left: 1rem;
+        }
+        
+        .lightbox-next {
+            right: 1rem;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: var(--primary-cream);
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .footer p {
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .filter-buttons {
+                padding: 0 1rem;
+            }
+            
+            .cultural-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .lightbox-content {
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+            
+            .lightbox-image {
+                height: 60vh;
+            }
+            
+            .lightbox-nav {
+                display: none;
+            }
+        }
+        
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="font-display text-xl font-bold text-gray-800">
+                    <a href="index.html">Michelle Wanjiru Maina</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="portfolio.html" class="nav-link active">Portfolio</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-menu md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-800 hover:text-orange-600">Home</a>
+                <a href="portfolio.html" class="block px-3 py-2 text-orange-600 font-semibold">Portfolio</a>
+                <a href="about.html" class="block px-3 py-2 text-gray-800 hover:text-orange-600">About</a>
+                <a href="services.html" class="block px-3 py-2 text-gray-800 hover:text-orange-600">Services</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container mx-auto px-4">
+            <h1 class="page-title font-display">My Portfolio</h1>
+            <p class="page-subtitle">
+                Explore my collection of traditional and contemporary beadwork, each piece telling a unique story 
+                of Kenyan culture, heritage, and artistic innovation.
+            </p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Work</button>
+            <button class="filter-btn" data-filter="traditional">Traditional</button>
+            <button class="filter-btn" data-filter="contemporary">Contemporary</button>
+            <button class="filter-btn" data-filter="custom">Custom</button>
+            <button class="filter-btn" data-filter="flag">Flag-themed</button>
+            <button class="filter-btn" data-filter="luxury">Luxury</button>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="portfolio-section">
+        <div class="portfolio-grid">
+            <!-- Portfolio Item 1 -->
+            <div class="portfolio-item fade-in" data-categories="flag,traditional">
+                <img src="resources/beadwork-1.jpg" alt="Kenyan Flag Bracelets" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Kenyan Flag Bracelets</h3>
+                    <p class="portfolio-description">
+                        Patriotic beadwork celebrating Kenyan heritage with traditional flag colors and Maasai shield symbols.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Flag-themed</span>
+                        <span class="tag">Traditional</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 2 -->
+            <div class="portfolio-item fade-in" data-categories="traditional">
+                <img src="resources/beadwork-2.jpg" alt="Traditional Maasai Necklace" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Traditional Maasai Necklace</h3>
+                    <p class="portfolio-description">
+                        Authentic Maasai necklace featuring intricate geometric patterns that tell stories of identity and tradition.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Traditional</span>
+                        <span class="tag">Maasai</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 3 -->
+            <div class="portfolio-item fade-in" data-categories="contemporary">
+                <img src="resources/beadwork-3.jpg" alt="Contemporary Collection" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Contemporary Collection</h3>
+                    <p class="portfolio-description">
+                        Modern interpretations of traditional designs that blend cultural heritage with contemporary fashion.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Contemporary</span>
+                        <span class="tag">Modern</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 4 -->
+            <div class="portfolio-item fade-in" data-categories="custom,luxury">
+                <img src="resources/beadwork-4.jpg" alt="Custom Wedding Set" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Custom Wedding Set</h3>
+                    <p class="portfolio-description">
+                        Elegant bridal jewelry set that incorporates traditional Maasai beading in sophisticated colors.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Custom</span>
+                        <span class="tag">Wedding</span>
+                        <span class="tag">Luxury</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 5 -->
+            <div class="portfolio-item fade-in" data-categories="traditional">
+                <img src="resources/beadwork-5.jpg" alt="Cultural Ceremony Pieces" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Cultural Ceremony Pieces</h3>
+                    <p class="portfolio-description">
+                        Ceremonial beadwork pieces used in traditional Kenyan celebrations and cultural events.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Traditional</span>
+                        <span class="tag">Ceremonial</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 6 -->
+            <div class="portfolio-item fade-in" data-categories="contemporary">
+                <img src="resources/beadwork-6.jpg" alt="Modern Interpretations" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Modern Interpretations</h3>
+                    <p class="portfolio-description">
+                        Minimalist designs with traditional influences featuring sophisticated earth tones and metallics.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Contemporary</span>
+                        <span class="tag">Minimalist</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 7 -->
+            <div class="portfolio-item fade-in" data-categories="traditional,luxury">
+                <img src="resources/beadwork-7.jpg" alt="Tribal Inspired Collection" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Tribal Inspired Collection</h3>
+                    <p class="portfolio-description">
+                        Bold statement pieces with traditional African patterns reflecting Kenyan tribal diversity.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Traditional</span>
+                        <span class="tag">Tribal</span>
+                        <span class="tag">Luxury</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 8 -->
+            <div class="portfolio-item fade-in" data-categories="contemporary">
+                <img src="resources/beadwork-8.jpg" alt="Festival Jewelry" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Festival Jewelry</h3>
+                    <p class="portfolio-description">
+                        Bright, celebratory designs perfect for cultural events and celebrations with vibrant colors.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Contemporary</span>
+                        <span class="tag">Festival</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 9 -->
+            <div class="portfolio-item fade-in" data-categories="custom">
+                <img src="resources/beadwork-9.jpg" alt="Personalized Pieces" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Personalized Pieces</h3>
+                    <p class="portfolio-description">
+                        Custom name bracelets and bespoke pieces with personal significance and meaningful patterns.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Custom</span>
+                        <span class="tag">Personalized</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Item 10 -->
+            <div class="portfolio-item fade-in" data-categories="luxury,contemporary">
+                <img src="resources/beadwork-10.jpg" alt="Luxury Collection" class="portfolio-image">
+                <div class="portfolio-info">
+                    <h3 class="portfolio-title">Luxury Collection</h3>
+                    <p class="portfolio-description">
+                        Premium beadwork collection featuring high-end materials and exquisite craftsmanship.
+                    </p>
+                    <div class="portfolio-tags">
+                        <span class="tag">Luxury</span>
+                        <span class="tag">Premium</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Context Section -->
+    <section class="cultural-context">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-display text-center mb-12 text-gray-800">Understanding the Cultural Significance</h2>
+            
+            <div class="cultural-grid">
+                <div class="cultural-card animate-on-scroll">
+                    <div class="cultural-icon">🔴</div>
+                    <h3 class="cultural-title">Red - Bravery & Unity</h3>
+                    <p class="cultural-description">
+                        Red represents the bravery of the Maasai warriors and the unity of the community. 
+                        It symbolizes the sacred blood of cattle and the strength of the Kenyan people.
+                    </p>
+                </div>
+                
+                <div class="cultural-card animate-on-scroll">
+                    <div class="cultural-icon">🔵</div>
+                    <h3 class="cultural-title">Blue - Energy & Sky</h3>
+                    <p class="cultural-description">
+                        Blue signifies the energy of life and the sky that provides life-giving rain. 
+                        It represents vitality, survival, and the blessings from above.
+                    </p>
+                </div>
+                
+                <div class="cultural-card animate-on-scroll">
+                    <div class="cultural-icon">⚪</div>
+                    <h3 class="cultural-title">White - Peace & Purity</h3>
+                    <p class="cultural-description">
+                        White represents peace, purity, and health. It symbolizes cow's milk, 
+                        a staple of Maasai sustenance and a sign of prosperity.
+                    </p>
+                </div>
+                
+                <div class="cultural-card animate-on-scroll">
+                    <div class="cultural-icon">🟢</div>
+                    <h3 class="cultural-title">Green - Health & Land</h3>
+                    <p class="cultural-description">
+                        Green symbolizes the health of the land and the prosperity it brings. 
+                        It represents the connection to nature and the fertility of the earth.
+                    </p>
+                </div>
+                
+                <div class="cultural-card animate-on-scroll">
+                    <div class="cultural-icon">🟡</div>
+                    <h3 class="cultural-title">Yellow - Fertility & Growth</h3>
+                    <p class="cultural-description">
+                        Yellow represents fertility, growth, and the nurturing power of the sun. 
+                        It symbolizes hospitality and the warmth of community.
+                    </p>
+                </div>
+                
+                <div class="cultural-card animate-on-scroll">
+                    <div class="cultural-icon">⚫</div>
+                    <h3 class="cultural-title">Black - People & Resilience</h3>
+                    <p class="cultural-description">
+                        Black stands for the people and the struggles they endure. It represents 
+                        pride, identity, and the resilience of the community.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 Michelle Wanjiru Maina. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    
+    <script>
+        // Initialize portfolio page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate cultural cards on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        });
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Michelle Wanjiru Maina</title>
+    <meta name="description" content="Learn about Michelle Wanjiru Maina's professional background, education, and passion for preserving Kenyan cultural heritage through beadwork.">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://unpkg.com/splitting@1.0.6/dist/splitting.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-dark: #2C2C2C;
+            --primary-accent: #D2691E;
+            --primary-cream: #F5F5DC;
+            --accent-gold: #DAA520;
+            --accent-sage: #9CAF88;
+            --accent-coral: #F08080;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary-dark);
+            background: var(--primary-cream);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(245, 245, 220, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-accent);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-accent);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Page Header */
+        .page-header {
+            padding: 8rem 0 4rem;
+            background: linear-gradient(135deg, var(--primary-dark), #3a3a3a);
+            color: white;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-accent), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            padding: 6rem 0;
+            background: white;
+        }
+        
+        .profile-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .profile-image {
+            position: relative;
+        }
+        
+        .profile-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .profile-text h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+            color: var(--primary-dark);
+        }
+        
+        .profile-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .profile-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .highlight-item {
+            background: var(--primary-cream);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .highlight-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        /* Skills Section */
+        .skills-section {
+            padding: 6rem 0;
+            background: var(--primary-cream);
+        }
+        
+        .skills-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-dark);
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .skills-chart {
+            width: 100%;
+            height: 400px;
+        }
+        
+        .skills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .skill-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .skill-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .skill-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-accent), var(--accent-gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .skill-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .skill-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Timeline Section */
+        .timeline-section {
+            padding: 6rem 0;
+            background: white;
+        }
+        
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .timeline {
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-accent);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: var(--primary-cream);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 0 2rem;
+            position: relative;
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            transform: translateY(-50%);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -20px;
+            border-left-color: var(--primary-cream);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -20px;
+            border-right-color: var(--primary-cream);
+        }
+        
+        .timeline-date {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--primary-accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            z-index: 2;
+        }
+        
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .timeline-subtitle {
+            font-size: 1.1rem;
+            color: var(--primary-accent);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .timeline-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Philosophy Section */
+        .philosophy-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary-dark), #3a3a3a);
+            color: white;
+        }
+        
+        .philosophy-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+        
+        .philosophy-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+            color: var(--primary-cream);
+        }
+        
+        .philosophy-quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            color: var(--primary-cream);
+            opacity: 0.9;
+        }
+        
+        .philosophy-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: var(--primary-cream);
+            text-align: center;
+        }
+        
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .cta-description {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-accent), var(--accent-gold));
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-dark);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(210, 105, 30, 0.3);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: var(--primary-cream);
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .footer p {
+            opacity: 0.8;
+        }
+        
+        /* Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: row !important;
+                padding-left: 50px;
+            }
+            
+            .timeline-content {
+                margin: 0;
+            }
+            
+            .timeline-content::before {
+                display: none;
+            }
+            
+            .timeline-date {
+                left: 20px;
+                transform: translateX(-50%);
+            }
+            
+            .timeline-item:nth-child(even) .timeline-content::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="font-display text-xl font-bold text-gray-800">
+                    <a href="index.html">Michelle Wanjiru Maina</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="portfolio.html" class="nav-link">Portfolio</a>
+                    <a href="about.html" class="nav-link active">About</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-menu md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-800 hover:text-orange-600">Home</a>
+                <a href="portfolio.html" class="block px-3 py-2 text-gray-800 hover:text-orange-600">Portfolio</a>
+                <a href="about.html" class="block px-3 py-2 text-orange-600 font-semibold">About</a>
+                <a href="services.html" class="block px-3 py-2 text-gray-800 hover:text-orange-600">Services</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container mx-auto px-4">
+            <h1 class="page-title font-display">About Michelle</h1>
+            <p class="page-subtitle">
+                Discover the story behind the artistry, education, and passion that drives my commitment 
+                to preserving Kenyan cultural heritage through contemporary beadwork.
+            </p>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="profile-content">
+            <div class="profile-image animate-on-scroll">
+                <img src="resources/profile-michelle.jpg" alt="Michelle Wanjiru Maina">
+            </div>
+            <div class="profile-text animate-on-scroll">
+                <h2 class="font-display">Creative Entrepreneur & Cultural Ambassador</h2>
+                <p>
+                    Born and raised in the vibrant town of Nanyuki, Kenya, I discovered my passion for beadwork 
+                    at an early age, inspired by the rich cultural traditions of my Maasai heritage. What began 
+                    as a childhood fascination has evolved into a professional commitment to preserving and 
+                    sharing our cultural legacy through contemporary artistic expression.
+                </p>
+                <p>
+                    With a Bachelor's degree in Business Management (BBM) from a prestigious Kenyan university, 
+                    I combine traditional craftsmanship with modern business acumen. This unique blend of 
+                    cultural knowledge and professional expertise allows me to create not just beautiful jewelry, 
+                    but sustainable business opportunities that empower our community.
+                </p>
+                <p>
+                    My work represents a bridge between generations, honoring the wisdom of our ancestors while 
+                    adapting to contemporary tastes and global markets. Each piece I create carries the stories, 
+                    symbols, and spirit of Kenyan culture, making them not just accessories, but meaningful 
+                    connections to our rich heritage.
+                </p>
+                
+                <div class="profile-highlights">
+                    <div class="highlight-item">
+                        <div class="highlight-number">5+</div>
+                        <div class="highlight-label">Years Experience</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-number">200+</div>
+                        <div class="highlight-label">Pieces Created</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-number">50+</div>
+                        <div class="highlight-label">Happy Clients</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-number">BBM</div>
+                        <div class="highlight-label">Degree</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section">
+        <div class="skills-container">
+            <h2 class="section-title font-display animate-on-scroll">Professional Expertise</h2>
+            
+            <div class="skills-grid">
+                <div class="animate-on-scroll">
+                    <div id="skills-chart" class="skills-chart"></div>
+                </div>
+                
+                <div class="skills-list animate-on-scroll">
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <div class="skill-icon">🎨</div>
+                            <h3 class="skill-name">Beadwork Design</h3>
+                        </div>
+                        <p class="skill-description">
+                            Master of traditional Maasai beading techniques with expertise in color symbolism, 
+                            pattern creation, and cultural storytelling through jewelry design.
+                        </p>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <div class="skill-icon">📊</div>
+                            <h3 class="skill-name">Business Strategy</h3>
+                        </div>
+                        <p class="skill-description">
+                            Strategic business development, market analysis, and sustainable growth planning 
+                            for creative enterprises and cultural businesses.
+                        </p>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <div class="skill-icon">📱</div>
+                            <h3 class="skill-name">Digital Marketing</h3>
+                        </div>
+                        <p class="skill-description">
+                            Comprehensive digital marketing expertise including brand development, social media 
+                            strategy, and cultural storytelling for authentic African brands.
+                        </p>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <div class="skill-icon">🌍</div>
+                            <h3 class="skill-name">Cultural Preservation</h3>
+                        </div>
+                        <p class="skill-description">
+                            Deep knowledge of Kenyan cultural traditions, Maasai heritage, and the historical 
+                            significance of African beadwork patterns and symbols.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="timeline-container">
+            <h2 class="section-title font-display animate-on-scroll">My Journey</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-date">2019</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Business Degree Completion</h3>
+                        <p class="timeline-subtitle">Bachelor of Business Management (BBM)</p>
+                        <p class="timeline-description">
+                            Graduated with honors, specializing in entrepreneurship and marketing. 
+                            My thesis focused on sustainable business models for traditional crafts in Kenya.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-date">2020</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Cultural Heritage Project</h3>
+                        <p class="timeline-subtitle">Community Initiative Launch</p>
+                        <p class="timeline-description">
+                            Started working with local Maasai women to document traditional beadwork patterns 
+                            and create educational programs about cultural significance.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-date">2021</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">First Collection Launch</h3>
+                        <p class="timeline-subtitle">Contemporary African Jewelry</p>
+                        <p class="timeline-description">
+                            Launched my first commercial collection, blending traditional techniques with 
+                            modern aesthetics. Featured in local fashion shows and cultural exhibitions.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-date">2022</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">International Recognition</h3>
+                        <p class="timeline-subtitle">Global Cultural Exchange</p>
+                        <p class="timeline-description">
+                            Participated in international craft fairs and cultural exchange programs, 
+                            showcasing Kenyan beadwork to global audiences and building international partnerships.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Business Expansion</h3>
+                        <p class="timeline-subtitle">Workshop & Training Center</p>
+                        <p class="timeline-description">
+                            Established a dedicated workshop and training center in Nanyuki, providing 
+                            employment opportunities for local women and preserving traditional craftsmanship.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-date">2024</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Digital Presence Launch</h3>
+                        <p class="timeline-subtitle">Online Platform & E-commerce</p>
+                        <p class="timeline-description">
+                            Launched comprehensive online presence to reach global markets, combining 
+                            traditional craftsmanship with modern digital marketing and e-commerce strategies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy-section">
+        <div class="philosophy-content">
+            <h2 class="philosophy-title font-display animate-on-scroll">My Philosophy</h2>
+            <blockquote class="philosophy-quote animate-on-scroll">
+                "Every bead tells a story, every pattern carries wisdom, and every piece connects us to our roots."
+            </blockquote>
+            <p class="philosophy-text animate-on-scroll">
+                My work is guided by the belief that cultural preservation and economic empowerment can coexist 
+                beautifully. Through beadwork, I aim to create sustainable livelihoods while ensuring that the 
+                stories, symbols, and traditions of my people continue to thrive in contemporary contexts.
+            </p>
+            <p class="philosophy-text animate-on-scroll">
+                I believe that authentic cultural expression has a place in modern fashion and design. By 
+                honoring traditional techniques while adapting to contemporary tastes, we can create pieces 
+                that are both culturally significant and commercially viable.
+            </p>
+            <p class="philosophy-text animate-on-scroll">
+                My commitment extends beyond individual creations to community development, women's 
+                empowerment, and the preservation of indigenous knowledge systems. Every piece I create 
+                is a testament to the enduring power of cultural expression and artistic innovation.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content animate-on-scroll">
+            <h2 class="cta-title font-display">Let's Work Together</h2>
+            <p class="cta-description">
+                Whether you're interested in custom beadwork, cultural consultation, or business collaboration, 
+                I'm excited to explore how we can create something meaningful together while preserving 
+                and celebrating Kenyan heritage.
+            </p>
+            <a href="services.html" class="btn btn-primary">Get In Touch</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 Michelle Wanjiru Maina. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js"></script>
+    
+    <script>
+        // Initialize about page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize skills chart
+            const skillsContainer = document.getElementById('skills-chart');
+            if (skillsContainer && typeof echarts !== 'undefined') {
+                const chart = echarts.init(skillsContainer);
+                
+                const option = {
+                    title: {
+                        text: 'Professional Skills',
+                        textStyle: {
+                            color: '#2C2C2C',
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'value',
+                        max: 100,
+                        axisLabel: {
+                            color: '#666'
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: ['Beadwork Design', 'Business Strategy', 'Marketing', 'Cultural Knowledge', 'Creative Direction'],
+                        axisLabel: {
+                            color: '#666'
+                        }
+                    },
+                    series: [{
+                        type: 'bar',
+                        data: [95, 88, 92, 98, 85],
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                { offset: 0, color: '#D2691E' },
+                                { offset: 1, color: '#DAA520' }
+                            ])
+                        },
+                        barWidth: '60%'
+                    }]
+                };
+
+                chart.setOption(option);
+                
+                // Animate on scroll
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            chart.setOption(option, true);
+                        }
+                    });
+                });
+                
+                observer.observe(skillsContainer);
+            }
+            
+            // Animate timeline items on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        });
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
